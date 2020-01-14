@@ -26,14 +26,17 @@ export default class App extends React.Component {
                 <Text style={styles.btnText}>
                   {op}
                 </Text>
-              </View>
-              )}
+              </View>)}
             </View>
             )}
           </View>
 
           <View style={styles.col2}>
-            <Text>col2</Text>
+            {col2Buttons.map(op => <View key={op} style={styles.btn}>
+              <Text style={styles.btnText}>
+                {op}
+              </Text>
+            </View>)}
           </View>
         </View>
 
