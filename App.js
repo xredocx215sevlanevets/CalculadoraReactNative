@@ -7,14 +7,38 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       display: '',
-      result: '',
+      result: ''
     }
   }
 
   handleOp(op) {
-    this.setState({
-      display: this.state.display + op
-    })
+    if (op === 'C') {
+      this.setState({
+        display: '',
+        result: ''
+      })
+    } else if (op === '=') {
+      this.setState({
+        display: this.state.result,
+        result: ''
+      })
+    } else {
+      const display = this.state.display + op
+      let result = this.state.result
+
+      try {
+        let fixedOperation = display.split('x').join('*')
+        fixedOperation = fixedOperation.split('÷').join('/')
+        fixedOperation = fixedOperation.split(',').join('.')
+        result = new String(eval(fixedOperation)).toString()
+      } catch (error) { }
+
+      this.setState({
+        display,
+        result
+      })
+    }
+
   }
 
   render() {
@@ -25,7 +49,7 @@ export default class App extends React.Component {
       [',', '0', '='],
     ]
 
-    const col2Buttons = ['C', '÷', 'X', '-', '+']
+    const col2Buttons = ['C', '÷', 'x', '-', '+']
 
     return (
       <View style={styles.container}>
@@ -92,7 +116,7 @@ const styles = StyleSheet.create({
   ,
   col1: {
     flex: 3,
-    backgroundColor: 'grey'
+    backgroundColor: '#0e0e0e'
   },
   line: {
     flex: 1,
@@ -104,11 +128,12 @@ const styles = StyleSheet.create({
   },
   col2: {
     flex: 1,
-    backgroundColor: 'red'
+    backgroundColor: '#0b0b0b'
   },
   btnText: {
     textAlign: 'center',
     fontSize: 50,
+    color: 'white'
   }
 
 });
